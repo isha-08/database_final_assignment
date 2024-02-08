@@ -1,0 +1,230 @@
+Q.1. 
+Answer 1: 
+create table doctor(doctor_id int primary key auto_increment, doctor_name varchar(50) not null, doctor_age int not null, doctor_gender varchar(10) not null, doctor_city varchar(50) not null, specialization varchar(30) not null, years_of_experience int not null, salary float not null);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc patients;
++-------------------+-------------+------+-----+---------+----------------+
+| Field             | Type        | Null | Key | Default | Extra          |
++-------------------+-------------+------+-----+---------+----------------+
+| patient_id        | int         | NO   | PRI | NULL    | auto_increment |
+| patient_name      | varchar(50) | NO   |     | NULL    |                |
+| patient_age       | int         | NO   |     | NULL    |                |
+| patient_gender    | varchar(10) | NO   |     | NULL    |                |
+| patient_city      | varchar(50) | NO   |     | NULL    |                |
+| date_of_admission | date        | NO   |     | NULL    |                |
+| patient_status    | varchar(20) | NO   |     | NULL    |                |
+| doctor_id         | int         | NO   | MUL | NULL    |                |
++-------------------+-------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+select * from patients;
++------------+--------------+-------------+----------------+--------------+-------------------+----------------+-----------+
+| patient_id | patient_name | patient_age | patient_gender | patient_city | date_of_admission | patient_status | doctor_id |
++------------+--------------+-------------+----------------+--------------+-------------------+----------------+-----------+
+|        101 | Rajesh Kumar |          35 | Male           | Mumbai       | 2023-10-15        | Admitted       |         1 |
+|        102 | Aarti Sharma |          28 | Female         | Pune         | 2023-09-22        | Discharged     |         1 |
+|        103 | Suresh Patel |          45 | Male           | Ahmedabad    | 2023-08-07        | Admitted       |         2 |
+|        104 | Anita Gupta  |          32 | Female         | Mumbai       | 2023-07-19        | Admitted       |         2 |
+|        105 | Vijay Singh  |          50 | Male           | Pune         | 2023-06-25        | Discharged     |         3 |
+|        106 | Pooja Desai  |          22 | Female         | Ahmedabad    | 2023-05-14        | Admitted       |         3 |
+|        107 | Deepak Mehta |          40 | Male           | Mumbai       | 2023-04-30        | Admitted       |         4 |
+|        108 | Kiran Shah   |          30 | Female         | Pune         | 2023-03-17        | Discharged     |         4 |
++------------+--------------+-------------+----------------+--------------+-------------------+----------------+-----------+
+8 rows in set (0.00 sec)
+
+Q.2.
+Answer 2:
+
+mysql> create table Patients(patient_id int primary key auto_increment, patient_name varchar(50) not null, patient_age int not null, patient_gender varchar(10) not null, patient_city varchar(50) not null, date_of_admission date not null, patient_status varchar(20) not null, doctor_id int not null, foreign key(doctor_id) references Doctor(doctor_id));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc doctor;
++---------------------+-------------+------+-----+---------+----------------+
+| Field               | Type        | Null | Key | Default | Extra          |
++---------------------+-------------+------+-----+---------+----------------+
+| doctor_id           | int         | NO   | PRI | NULL    | auto_increment |
+| doctor_name         | varchar(50) | NO   |     | NULL    |                |
+| doctor_age          | int         | NO   |     | NULL    |                |
+| doctor_gender       | varchar(10) | NO   |     | NULL    |                |
+| doctor_city         | varchar(50) | NO   |     | NULL    |                |
+| specialization      | varchar(30) | NO   |     | NULL    |                |
+| years_of_experience | int         | NO   |     | NULL    |                |
+| salary              | float       | NO   |     | NULL    |                |
++---------------------+-------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+select * from doctor;
++-----------+------------------+------------+---------------+-------------+----------------+---------------------+--------+
+| doctor_id | doctor_name      | doctor_age | doctor_gender | doctor_city | specialization | years_of_experience | salary |
++-----------+------------------+------------+---------------+-------------+----------------+---------------------+--------+
+|         1 | Dr. Asha Bhosale |         30 | Female        | Ahmedabad   | Psychology     |                   6 |  50000 |
+|         2 | Dr. Aarti Dhumal |         30 | Female        | Ahmedabad   | Psychology     |                   9 |  60000 |
+|         3 | Dr. Aniruddha G  |         28 | Male          | Pune        | Neurology      |                   3 |  60000 |
+|         4 | Dr. Ishan        |         25 | Male          | Mumbai      | Physio         |                   2 |  20000 |
+|         5 | Dr. Anish        |         24 | Male          | Mumbai      | Physio         |                   2 |  25000 |
+|         6 | Dr. Sarika       |         24 | Female        | Pune        | Homeopathy     |                   1 |  10000 |
++-----------+------------------+------------+---------------+-------------+----------------+---------------------+--------+
+6 rows in set (0.00 sec)
+
+Q.3. 
+Answer 3: 
+UPDATE doctor SET salary = salary + 1000 WHERE years_of_experience > 5;
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from doctor;
++-----------+------------------+------------+---------------+-------------+------------+---------------------+--------+
+| doctor_id | doctor_name      | doctor_age | doctor_gender | doctor_city | subject    | years_of_experience | salary |
++-----------+------------------+------------+---------------+-------------+------------+---------------------+--------+
+|         1 | Dr. Asha Bhosale |         30 | Female        | Ahmedabad   | Psychology |                   6 |  51000 |
+|         2 | Dr. Aarti Dhumal |         30 | Female        | Ahmedabad   | Psychology |                   9 |  61000 |
+|         3 | Dr. Aniruddha G  |         28 | Male          | Pune        | Neurology  |                   3 |  60000 |
+|         4 | Dr. Ishan        |         25 | Male          | Mumbai      | Physio     |                   2 |  20000 |
+|         5 | Dr. Anish        |         24 | Male          | Mumbai      | Physio     |                   2 |  25000 |
+|         6 | Dr. Sarika       |         24 | Female        | Pune        | Homeopathy |                   1 |  10000 |
++-----------+------------------+------------+---------------+-------------+------------+---------------------+--------+
+6 rows in set (0.00 sec)
+
+Q.4. 
+Answer 4:
+CREATE TABLE bkup_patients SELECT * FROM patients;
+Query OK, 8 rows affected (0.03 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+INSERT INTO bkup_patients SELECT * FROM patients;
+Query OK, 8 rows affected (0.01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE bkup_doctor SELECT * FROM doctor;
+Query OK, 6 rows affected (0.02 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO bkup_doctor SELECT * FROM doctor;
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+Q.5. 
+Answer 5:
+select * from patients where patient_city in ('Pune', 'Mumbai');
++------------+--------------+-------------+----------------+--------------+-------------------+----------------+-----------+
+| patient_id | patient_name | patient_age | patient_gender | patient_city | date_of_admission | patient_status | doctor_id |
++------------+--------------+-------------+----------------+--------------+-------------------+----------------+-----------+
+|        101 | Rajesh Kumar |          35 | Male           | Mumbai       | 2023-10-15        | Admitted       |         1 |
+|        102 | Aarti Sharma |          28 | Female         | Pune         | 2023-09-22        | Discharged     |         1 |
+|        104 | Anita Gupta  |          32 | Female         | Mumbai       | 2023-07-19        | Admitted       |         2 |
+|        105 | Vijay Singh  |          50 | Male           | Pune         | 2023-06-25        | Discharged     |         3 |
+|        107 | Deepak Mehta |          40 | Male           | Mumbai       | 2023-04-30        | Admitted       |         4 |
+|        108 | Kiran Shah   |          30 | Female         | Pune         | 2023-03-17        | Discharged     |         4 |
++------------+--------------+-------------+----------------+--------------+-------------------+----------------+-----------+
+6 rows in set (0.00 sec)
+
+Q.6.
+Answer 6:
+select * from doctor where doctor_city='Ahmedabad' and doctor_name like 'Dr. A%';
++-----------+------------------+------------+---------------+-------------+------------+---------------------+--------+
+| doctor_id | doctor_name      | doctor_age | doctor_gender | doctor_city | subject    | years_of_experience | salary |
++-----------+------------------+------------+---------------+-------------+------------+---------------------+--------+
+|         1 | Dr. Asha Bhosale |         30 | Female        | Ahmedabad   | Psychology |                   6 |  50000 |
+|         2 | Dr. Aarti Dhumal |         30 | Female        | Ahmedabad   | Psychology |                   9 |  60000 |
++-----------+------------------+------------+---------------+-------------+------------+---------------------+--------+
+2 rows in set (0.00 sec)
+
+Q.7.
+Answer 7:
+select * from doctor where years_of_experience>=4;
++-----------+------------------+------------+---------------+-------------+------------+---------------------+--------+
+| doctor_id | doctor_name      | doctor_age | doctor_gender | doctor_city | subject    | years_of_experience | salary |
++-----------+------------------+------------+---------------+-------------+------------+---------------------+--------+
+|         1 | Dr. Asha Bhosale |         30 | Female        | Ahmedabad   | Psychology |                   6 |  50000 |
+|         2 | Dr. Aarti Dhumal |         30 | Female        | Ahmedabad   | Psychology |                   9 |  60000 |
++-----------+------------------+------------+---------------+-------------+------------+---------------------+--------+
+2 rows in set (0.00 sec)
+
+Q.8. 
+Answer 8:
+UPDATE doctor SET salary = salary + 1000 WHERE years_of_experience > 5;
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from doctor;
++-----------+------------------+------------+---------------+-------------+------------+---------------------+--------+
+| doctor_id | doctor_name      | doctor_age | doctor_gender | doctor_city | subject    | years_of_experience | salary |
++-----------+------------------+------------+---------------+-------------+------------+---------------------+--------+
+|         1 | Dr. Asha Bhosale |         30 | Female        | Ahmedabad   | Psychology |                   6 |  51000 |
+|         2 | Dr. Aarti Dhumal |         30 | Female        | Ahmedabad   | Psychology |                   9 |  61000 |
+|         3 | Dr. Aniruddha G  |         28 | Male          | Pune        | Neurology  |                   3 |  60000 |
+|         4 | Dr. Ishan        |         25 | Male          | Mumbai      | Physio     |                   2 |  20000 |
+|         5 | Dr. Anish        |         24 | Male          | Mumbai      | Physio     |                   2 |  25000 |
+|         6 | Dr. Sarika       |         24 | Female        | Pune        | Homeopathy |                   1 |  10000 |
++-----------+------------------+------------+---------------+-------------+------------+---------------------+--------+
+6 rows in set (0.00 sec)
+
+Q.9.
+Answer 9:
+SELECT patient_city, COUNT(*) AS num_patients FROM patients GROUP BY patient_city;
++--------------+--------------+
+| patient_city | num_patients |
++--------------+--------------+
+| Mumbai       |            3 |
+| Pune         |            3 |
+| Ahmedabad    |            2 |
++--------------+--------------+
+3 rows in set (0.00 sec)
+
+Q.10.
+Answer 10:
+SELECT p.* FROM patients p JOIN doctor d ON p.doctor_id = d.doctor_id WHERE p.patient_status = 'Discharged' AND d.years_of_experience > 3;
++------------+--------------+-------------+----------------+--------------+-------------------+----------------+-----------+
+| patient_id | patient_name | patient_age | patient_gender | patient_city | date_of_admission | patient_status | doctor_id |
++------------+--------------+-------------+----------------+--------------+-------------------+----------------+-----------+
+|        102 | Aarti Sharma |          28 | Female         | Pune         | 2023-09-22        | Discharged     |         1 |
++------------+--------------+-------------+----------------+--------------+-------------------+----------------+-----------+
+1 row in set (0.00 sec)
+
+Q.11.
+Answer 11:
+CREATE TABLE bkup_patients_structure LIKE patients;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> CREATE TABLE bkup_doctor_structure LIKE doctor;
+Query OK, 0 rows affected (0.04 sec)
+
+describe bkup_patients;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| patient_id        | int         | NO   |     | 0       |       |
+| patient_name      | varchar(50) | NO   |     | NULL    |       |
+| patient_age       | int         | NO   |     | NULL    |       |
+| patient_gender    | varchar(10) | NO   |     | NULL    |       |
+| patient_city      | varchar(50) | NO   |     | NULL    |       |
+| date_of_admission | date        | NO   |     | NULL    |       |
+| patient_status    | varchar(20) | NO   |     | NULL    |       |
+| doctor_id         | int         | NO   |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> describe bkup_doctor;
++---------------------+-------------+------+-----+---------+-------+
+| Field               | Type        | Null | Key | Default | Extra |
++---------------------+-------------+------+-----+---------+-------+
+| doctor_id           | int         | NO   |     | 0       |       |
+| doctor_name         | varchar(50) | NO   |     | NULL    |       |
+| doctor_age          | int         | NO   |     | NULL    |       |
+| doctor_gender       | varchar(10) | NO   |     | NULL    |       |
+| doctor_city         | varchar(50) | NO   |     | NULL    |       |
+| subject             | varchar(30) | YES  |     | NULL    |       |
+| years_of_experience | int         | NO   |     | NULL    |       |
+| salary              | float       | NO   |     | NULL    |       |
++---------------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+Q.12.
+Answer 12:
+CREATE TABLE media_data (id INT AUTO_INCREMENT PRIMARY KEY, image_data LONGBLOB, video_data LONGBLOB);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into media_data values(1, 'C:\Users\Coditas\Pictures\Saved Pictures\semicolon.jpg', 'C:\Users\Coditas\Videos\Captures\videosample.mp4');
+Query OK, 1 row affected (0.01 sec)
+
